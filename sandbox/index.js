@@ -1,4 +1,4 @@
-const DamnError = require('../src');
+const { DamnError, configGlobally, undoGlobalConfig } = require('../src');
 
 /**
  * ===========================
@@ -41,3 +41,25 @@ rejectThis()
 rejectWithMessage()
   .then(() => console.log('How?!'))
   .catch(err => console.error(err));
+
+/**
+ * ===========================
+ * With globally configured
+ * ===========================
+ */
+
+configGlobally();
+
+try {
+  throw new Error('with damn Error configured globally');
+} catch (err) {
+  console.error(err);
+}
+
+undoGlobalConfig();
+
+try {
+  throw new Error('without damn Error configured globally');
+} catch (err) {
+  console.error(err);
+}
