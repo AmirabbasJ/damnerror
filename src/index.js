@@ -1,5 +1,6 @@
 const { getErrorName, getErrorMessage } = require('./lib/error');
 
+const StandardError = Error;
 class DamnError extends Error {
   constructor(message, ...args) {
     super(message, ...args);
@@ -9,4 +10,12 @@ class DamnError extends Error {
   }
 }
 
-module.exports = DamnError;
+const undoGlobalConfig = () => {
+  global.Error = StandardError;
+};
+
+const configGlobally = () => {
+  global.Error = DamnError;
+};
+
+module.exports = { DamnError, undoGlobalConfig, configGlobally };
